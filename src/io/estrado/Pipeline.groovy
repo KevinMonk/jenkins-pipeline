@@ -40,15 +40,12 @@ def helmDeploy(Map args) {
     if (args.dry_run) {
         println "Running dry-run deployment"
 
-        sh "helm upgrade --dry-run --install ${args.name} ${args.chart_dir} --set image.tag=${args.version_tag},replicaCount=${args.replicaCount} --namespace=${namespace}"
+        sh "helm upgrade --dry-run --install ${args.name} ${args.chart_dir} --set image.tag=${args.imageTag},replicaCount=${args.replicaCount} --namespace=${namespace}"
     } else {
         println "Running deployment"
 
         // reimplement --wait once it works reliable
-        sh "helm upgrade --install ${args.name} ${args.chart_dir} --set image.tag=${args.version_tag},replicaCount=${args.replicaCount} --namespace=${namespace}"
-
-        // sleeping until --wait works reliably
-        sleep(20)
+        sh "helm upgrade --install --wait ${args.name} ${args.chart_dir} --set image.tag=${args.imageTag},replicaCount=${args.replicaCount} --namespace=${namespace}"
 
         echo "Application ${args.name} successfully deployed. Use helm status ${args.name} to check"
     }
