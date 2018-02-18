@@ -41,10 +41,15 @@ def helmDeploy(Map args) {
         println "Running dry-run deployment"
 
         sh "helm upgrade --dry-run --install ${args.name} ${args.chart_dir} --set image.tag=${args.imageTag},replicaCount=${args.replicaCount} --namespace=${namespace}"
-    } else {
-        println "Running deployment"
+    } else if (args.environment != "master") {
+        println "Running staging deployment"
 
-        // reimplement --wait once it works reliable
+        sh "helm upgrade --install --values ${args.chart_dir}/staging-values.yaml --wait ${args.name} ${args.chart_dir} --set image.tag=${args.imageTag},replicaCount=${args.replicaCount} --namespace=${namespace}"
+
+        echo "Application ${args.name} successfully deployed. Use helm status ${args.name} to check"
+    } else {
+        println "Running staging deployment"
+
         sh "helm upgrade --install --wait ${args.name} ${args.chart_dir} --set image.tag=${args.imageTag},replicaCount=${args.replicaCount} --namespace=${namespace}"
 
         echo "Application ${args.name} successfully deployed. Use helm status ${args.name} to check"
