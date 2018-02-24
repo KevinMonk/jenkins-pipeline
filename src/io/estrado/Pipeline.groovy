@@ -19,6 +19,8 @@ def helmConfig() {
     //setup helm connectivity to Kubernetes API and Tiller
     println "initiliazing helm client"
     sh "helm init --wait --service-account tiller"
+    //helm init --wait doesn't work correctly, so sleeping for 10 seconds. https://github.com/kubernetes/helm/pull/3506
+    sh "sleep 10"
     println "checking client/server version"
     sh "helm version"
 }
