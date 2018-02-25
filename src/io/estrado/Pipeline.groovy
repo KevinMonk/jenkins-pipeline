@@ -18,9 +18,9 @@ def helmLint(String chart_dir) {
 def helmConfig() {
     //setup helm connectivity to Kubernetes API and Tiller
     println "initiliazing helm client"
-    sh "helm init --wait --service-account tiller"
-    //helm init --wait doesn't work correctly, so sleeping for 10 seconds. https://github.com/kubernetes/helm/pull/3506
-    sh "sleep 10"
+    sh "helm init --upgrade --service-account tiller --tiller-image=gcr.io/kubernetes-helm/tiller:v2.8.1"
+    echo "helm init --wait doesn't work correctly in 2.8.1, so sleeping for 20 seconds to ensure tiller pod is ready. https://github.com/kubernetes/helm/pull/3506"
+    sh "sleep 20"
     println "checking client/server version"
     sh "helm version"
 }
