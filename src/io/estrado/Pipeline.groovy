@@ -173,24 +173,24 @@ def getContainerRepoAcct(config) {
     return acct
 }
 
-def downloadAppFilesFromFileShare(Map config) {
+// def downloadAppFilesFromFileShare(Map config) {
 
-    def command = "./az-storage-files-download.sh "
+//     def command = "./az-storage-files-download.sh "
 
-    // Attach bucket name argument
-    command += " --bucket-name=${config.bucket_name}";
+//     // Attach bucket name argument
+//     command += " --bucket-name=${config.bucket_name}";
 
-    // Attach files dir path argument
-    command += " --files-dir-path=${config.files_dir_path}";
+//     // Attach files dir path argument
+//     command += " --files-dir-path=${config.files_dir_path}";
 
-    // Attach connection string path argument
-    command += " --connection-string=\"${config.connection_string}\"";
+//     // Attach connection string path argument
+//     command += " --connection-string=\"${config.connection_string}\"";
 
-    // Attach the download path argument
-    command += " --download-path=${config.download_path}"
+//     // Attach the download path argument
+//     command += " --download-path=${config.download_path}"
 
-    sh (returnStdout: true, script: command);
-}
+//     sh (returnStdout: true, script: command);
+// }
 
 def refreshAppFilesSecret(Map config) {
 
@@ -210,4 +210,25 @@ def refreshAppFilesSecret(Map config) {
     } catch (err) {
 
     }
+}
+
+def downloadAppFilesFromFileShare(Map config) {
+
+    sh "az storage file download-batch --destination ${download_path} --source ${bucket_name}/${files_dir_path} --connection-string ${connection_string}"
+
+    // def command = "./az-storage-files-download.sh "
+
+    // // Attach bucket name argument
+    // command += " --bucket-name=${config.bucket_name}";
+
+    // // Attach files dir path argument
+    // command += " --files-dir-path=${config.files_dir_path}";
+
+    // // Attach connection string path argument
+    // command += " --connection-string=\"${config.connection_string}\"";
+
+    // // Attach the download path argument
+    // command += " --download-path=${config.download_path}"
+
+    // sh (returnStdout: true, script: command);
 }
