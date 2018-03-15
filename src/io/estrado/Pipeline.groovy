@@ -189,7 +189,7 @@ def downloadAppFilesFromFileShare(Map config) {
     // Attach the download path argument
     command += " --download-path=${config.download_path}"
 
-    sh command;
+    sh (returnStdout: true, script: command);
 }
 
 def refreshAppFilesSecret(Map config) {
