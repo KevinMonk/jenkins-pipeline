@@ -184,3 +184,13 @@ def downloadAppFilesFromFileShare(Map config) {
     sh "az storage file download-batch --destination ${config.download_path} --source ${config.bucket_name}/${config.files_dir_path}"
 }
 
+@NonCPS
+def getHelmReleaseOverrides(Map map=[:]) {
+    // jenkins and workflow restriction force this function instead of map.each(): https://issues.jenkins-ci.org/browse/JENKINS-27421
+    def options = ""
+    map.each { key, value ->
+        options += "$key=$value,"
+    }
+
+    return options
+}
