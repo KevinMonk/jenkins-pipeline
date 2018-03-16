@@ -173,67 +173,11 @@ def getContainerRepoAcct(config) {
     return acct
 }
 
-// def downloadAppFilesFromFileShare(Map config) {
-
-//     def command = "./az-storage-files-download.sh "
-
-//     // Attach bucket name argument
-//     command += " --bucket-name=${config.bucket_name}";
-
-//     // Attach files dir path argument
-//     command += " --files-dir-path=${config.files_dir_path}";
-
-//     // Attach connection string path argument
-//     command += " --connection-string=\"${config.connection_string}\"";
-
-//     // Attach the download path argument
-//     command += " --download-path=${config.download_path}"
-
-//     sh (returnStdout: true, script: command);
-// }
-
-
 def refreshAppFilesSecret(Map config) {
+    sh "kubectl delete secret ${config.secret_name} --namespace=${config.namespace}"
     sh "ls -ltrah ${config.files_dir_path}"
     sh "kubectl create secret generic ${config.secret_name} --namespace=${config.namespace} --from-file=${config.files_dir_path}/ "
-    // def command = './kubectl-app-files-secret.sh ';
-
-    // command += " --files-dir-path=${config.files_dir_path} ";
-
-    // command += "--secret-name=${config.secret_name} ";
-
-    // command += "--ns=${config.namespace}";
-
-    // try {
-    //     def status = sh (
-    //         script: command,
-    //         returnStdout: true
-    //     );
-    // } catch (err) {
-
-    // }
 }
-
-// def refreshAppFilesSecret(Map config) {
-
-
-//     def command = './kubectl-app-files-secret.sh ';
-
-//     command += " --files-dir-path=${config.files_dir_path} ";
-
-//     command += "--secret-name=${config.secret_name} ";
-
-//     command += "--ns=${config.namespace}";
-
-//     try {
-//         def status = sh (
-//             script: command,
-//             returnStdout: true
-//         );
-//     } catch (err) {
-
-//     }
-// }
 
 def downloadAppFilesFromFileShare(Map config) {
     sh "mkdir -p ${config.download_path}"
