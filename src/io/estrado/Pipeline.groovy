@@ -192,7 +192,30 @@ def getContainerRepoAcct(config) {
 //     sh (returnStdout: true, script: command);
 // }
 
+
 def refreshAppFilesSecret(Map config) {
+    sh "ls -ltrah ${config.files_dir_path}"
+    sh "kubectl create secret generic ${config.secret_name} --namespace=${config.namespace} --from-file=${config.files_dir_path}/ "
+    // def command = './kubectl-app-files-secret.sh ';
+
+    // command += " --files-dir-path=${config.files_dir_path} ";
+
+    // command += "--secret-name=${config.secret_name} ";
+
+    // command += "--ns=${config.namespace}";
+
+    // try {
+    //     def status = sh (
+    //         script: command,
+    //         returnStdout: true
+    //     );
+    // } catch (err) {
+
+    // }
+}
+
+def refreshAppFilesSecret(Map config) {
+
 
     def command = './kubectl-app-files-secret.sh ';
 
