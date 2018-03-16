@@ -27,6 +27,10 @@ def helmConfig() {
 def helmDeploy(Map args) {
     //configure helm client and confirm tiller process is installed
     helmConfig()
+    def String release_overrides = ""
+    if (args.set) {
+      release_overrides = getHelmReleaseOverrides(args.set)
+    }
 
     def String namespace
 
@@ -40,17 +44,12 @@ def helmDeploy(Map args) {
     if (args.dry_run) {
         println "Running dry-run deployment"
 
-        sh "helm upgrade --dry-run --install ${args.name} ${args.chart_dir} --set image.tag=${args.imageTag},replicaCount=${args.replicaCount} --namespace=${namespace}"
-    } else if (args.environment != "master") {
-        println "Running staging deployment"
-
-        sh "helm upgrade --install --values ${args.chart_dir}/staging-values.yaml --wait ${args.name} ${args.chart_dir} --set image.tag=${args.imageTag},replicaCount=${args.replicaCount} --namespace=${namespace}"
-
-        echo "Application ${args.name} successfully deployed. Use helm status ${args.name} to check"
+        sh "helm upgrade --dry-run --install ${args.name} ${args.chart_dir} " + (release_overrides ? "--set ${release_overrides}" : "") + " --namespace=${namespace}"
     } else {
-        println "Running staging deployment"
+        println "Running deployment"
 
-        sh "helm upgrade --install --wait ${args.name} ${args.chart_dir} --set image.tag=${args.imageTag},replicaCount=${args.replicaCount} --namespace=${namespace}"
+        sh "helm dependency update ${args.chart_dir}"
+        sh "helm upgrade --install ${args.name} ${args.chart_dir} " + (release_overrides ? "--set ${release_overrides}" : "") + " --namespace=${namespace}" + " --wait"
 
         echo "Application ${args.name} successfully deployed. Use helm status ${args.name} to check"
     }
@@ -184,3 +183,4 @@ def downloadAppFilesFromFileShare(Map config) {
     //The connection string is passed in as an environment variable detected by the Azure CLI
     sh "az storage file download-batch --destination ${config.download_path} --source ${config.bucket_name}/${config.files_dir_path}"
 }
+
