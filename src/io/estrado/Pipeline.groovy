@@ -214,26 +214,26 @@ def refreshAppFilesSecret(Map config) {
     // }
 }
 
-def refreshAppFilesSecret(Map config) {
+// def refreshAppFilesSecret(Map config) {
 
 
-    def command = './kubectl-app-files-secret.sh ';
+//     def command = './kubectl-app-files-secret.sh ';
 
-    command += " --files-dir-path=${config.files_dir_path} ";
+//     command += " --files-dir-path=${config.files_dir_path} ";
 
-    command += "--secret-name=${config.secret_name} ";
+//     command += "--secret-name=${config.secret_name} ";
 
-    command += "--ns=${config.namespace}";
+//     command += "--ns=${config.namespace}";
 
-    try {
-        def status = sh (
-            script: command,
-            returnStdout: true
-        );
-    } catch (err) {
+//     try {
+//         def status = sh (
+//             script: command,
+//             returnStdout: true
+//         );
+//     } catch (err) {
 
-    }
-}
+//     }
+// }
 
 def downloadAppFilesFromFileShare(Map config) {
     sh "mkdir -p ${config.download_path}"
