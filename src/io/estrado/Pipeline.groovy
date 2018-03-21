@@ -173,7 +173,16 @@ def getContainerRepoAcct(config) {
 }
 
 def refreshAppFilesSecret(Map config) {
-    sh "kubectl delete secret ${config.secret_name} --namespace=${config.namespace}"
+    try {
+        sh "kubectl delete secret ${config.secret_name} --namespace=${config.namespace}"
+        } catch (Exception e) {
+            println "Secret does not exist, probably becuase this is the first time deploying ${e}"
+        }
+    try {
+        sh "kubectl create namespace ${config.namespace}"
+        } catch (Exception e) {
+            println "Namespace already exists, probably because this isn't the first time deploying ${e}"
+        }
     sh "ls -ltrah ${config.files_dir_path}"
     sh "kubectl create secret generic ${config.secret_name} --namespace=${config.namespace} --from-file=${config.files_dir_path}/ "
 }
