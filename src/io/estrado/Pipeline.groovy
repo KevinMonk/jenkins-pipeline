@@ -49,7 +49,7 @@ def helmDeploy(Map args) {
         println "Running deployment"
         sh "apk add --update curl"
         sh "helm dependency update ${args.chart_dir}"
-        sh "helm package --debug --version ${args.chart_app_ver} --dependency-update --app-version ${args.containerTag} ${args.chart_dir}"
+        sh "helm package --debug --version ${args.chart_sem_ver} --dependency-update --app-version ${args.containerTag} ${args.chart_dir}"
         sh "curl --data-binary \"@${args.chart_name}-${args.chart_app_ver}.tgz\" ${args.HELM_URL}/api/charts"
         echo "Helm chart ${args.name}-${args.chart_app_ver}.tgz successfully uploaded to chart museuem"
 
