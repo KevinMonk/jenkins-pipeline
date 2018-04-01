@@ -49,9 +49,10 @@ def helmDeploy(Map args) {
         println "Running deployment"
         sh "apk add --update curl"
         sh "helm dependency update ${args.chart_dir}"
-        sh "helm package --debug --version ${args.chart_sem_ver} --dependency-update --app-version ${args.containerTag} ${args.chart_dir}"
-        sh "curl --data-binary \"@${args.chart_name}-${args.chart_sem_ver}.tgz\" ${args.chart_museum_url}/api/charts"
-        echo "Helm chart ${args.name}-${args.chart_app_ver}.tgz successfully uploaded to chart museum"
+
+        sh "helm package --debug --version ${args.chart_sem_ver} --dependency-update --app-version ${args.chart_app_ver} ${args.chart_dir}"
+        sh "mv ${args.chart_name}-${args.chart_sem_ver}.tgz ${args.chart_name}-${args.chart_sem_ver}-${args.chart_app_ver}.tgz"
+        sh "curl --data-binary \"@${args.chart_name}-${args.chart_sem_ver}-${args.chart_app_ver}.tgz\" ${args.chart_museum_url}/api/charts"        
 
         sh "helm upgrade --install ${args.name} ${args.chart_dir} " + (release_overrides ? "--set ${release_overrides}" : "") + " --namespace=${namespace}" + " --wait"
 
