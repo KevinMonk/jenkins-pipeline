@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a6d08802-26a4-4b83-b511-77e9f596115e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/io/estrado/Pipeline.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/io/estrado/Pipeline.groovy" afterDir="false" />
-    </list>
+    <list default="true" id="a6d08802-26a4-4b83-b511-77e9f596115e" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,8 +14,8 @@
       <file leaf-file-name="Pipeline.groovy" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/io/estrado/Pipeline.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="110">
-              <caret line="49" selection-start-line="49" selection-end-line="57" selection-end-column="100" />
+            <state relative-caret-position="149">
+              <caret line="52" column="117" lean-forward="true" selection-start-line="52" selection-start-column="117" selection-end-line="52" selection-end-column="117" />
             </state>
           </provider>
         </entry>
@@ -183,8 +181,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/io/estrado/Pipeline.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="49" selection-start-line="49" selection-end-line="57" selection-end-column="100" />
+        <state relative-caret-position="149">
+          <caret line="52" column="117" lean-forward="true" selection-start-line="52" selection-start-column="117" selection-end-line="52" selection-end-column="117" />
         </state>
       </provider>
     </entry>
