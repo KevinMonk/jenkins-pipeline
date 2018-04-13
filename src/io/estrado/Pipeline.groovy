@@ -47,13 +47,13 @@ def helmDeploy(Map args) {
         sh "helm upgrade --dry-run --install ${args.name} ${args.chart_dir} " + (release_overrides ? "--set ${release_overrides}" : "") + " --namespace=${namespace}"
     } else {
         println "Running deployment"
-        sh "apk add --update curl"
-        sh "helm dependency update ${args.chart_dir}"
-        sh "sed -i -e \"s/name:.*/name: ${args.name}-${args.chart_app_ver}/\" ${args.chart_dir}/Chart.yaml"
-        sh "cp -R ${args.chart_dir} ${args.name}-${args.chart_app_ver}"
-        sh "helm package --debug --version ${args.chart_sem_ver} --dependency-update --app-version ${args.chart_app_ver} ${args.name}-${args.chart_app_ver}"
+        //sh "apk add --update curl"
+        //sh "helm dependency update ${args.chart_dir}"
+        //sh "sed -i -e \"s/name:.*/name: ${args.name}-${args.chart_app_ver}/\" ${args.chart_dir}/Chart.yaml"
+        //sh "cp -R ${args.chart_dir} ${args.name}-${args.chart_app_ver}"
+        //sh "helm package --debug --version ${args.chart_sem_ver} --dependency-update --app-version ${args.chart_app_ver} ${args.name}-${args.chart_app_ver}"
 
-        sh "curl --data-binary \"@${args.name}-${args.chart_app_ver}-${args.chart_sem_ver}.tgz\" ${args.chart_museum_url}/api/charts"        
+        //sh "curl --data-binary \"@${args.name}-${args.chart_app_ver}-${args.chart_sem_ver}.tgz\" ${args.chart_museum_url}/api/charts"        
 
         sh "helm upgrade --install ${args.name} ${args.chart_dir} " + (release_overrides ? "--set ${release_overrides}" : "") + " --namespace=${namespace}" + " --wait"
 
