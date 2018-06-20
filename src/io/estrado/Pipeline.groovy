@@ -141,6 +141,8 @@ def getContainerTags(config, Map tags = [:]) {
         if (env.BRANCH_NAME) {
             tags << ['branch-latest': env.BRANCH_NAME + '-latest']    
         }    
+    } catch (Exception e) {
+        println "WARNING: tagging latest commit by branch unavailable from env. ${e}"
     }    
 
     // master tag
